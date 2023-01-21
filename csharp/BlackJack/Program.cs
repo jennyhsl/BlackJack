@@ -22,6 +22,11 @@ namespace BlackJack
                     hand.Add(card);
                     var total = hand.Sum(x => Math.Min((int)x.face, 10));
                     Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.face, total);
+                    if (total > 21)
+                    {
+                        Console.WriteLine("You got more than 21 points, you lost.");
+                        break;
+                    }
                 }
                 else if (read == "Stand")
                 {
