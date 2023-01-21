@@ -18,10 +18,10 @@ namespace BlackJack
                 string read = Console.ReadLine();
                 if (read == "Hit")
                 {
-                    var card = deck.Cards.Dequeue();
+                    var card = deck.DrawCard();
                     hand.Add(card);
-                    var total = hand.Sum(x => Math.Min(x.Rank, 10));
-                    Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.Rank, total);
+                    var total = hand.Sum(x => Math.Min((int)x.face, 10));
+                    Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.face, total);
                 }
                 else if (read == "Stand")
                 {
