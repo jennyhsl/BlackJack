@@ -26,17 +26,16 @@ class Program
                     softAces++;
                 }
 
-                var total = hand.Sum(x => Math.Min((int)x.face, 10));
-                if (total > 21 && softAces > 0)
-                {
-                    total -= 10;
-                    softAces--;
-                }
-
+                var total = GetHandValue(hand, softAces);
                 Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.face, total);
                 if (total > 21)
                 {
                     Console.WriteLine("You got more than 21 points, you lost.");
+                    break;
+                }
+                if (total == 21)
+                {
+                    Console.WriteLine("You got exactly 21 points, you win!");
                     break;
                 }
             }
@@ -45,5 +44,16 @@ class Program
                 break;
             }
         }
+    }
+    
+    private static int GetHandValue(List<Card> hand, int softAces)
+    {
+        var total = hand.Sum(x => Math.Min((int)x.face, 10)) + (softAces == 1 ? 10 : 0);
+        if (total > 21 && softAces > 0)
+        {
+            total -= 10;
+            softAces--;
+        }
+        return total;
     }
 }
