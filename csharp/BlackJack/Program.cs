@@ -12,6 +12,9 @@ class Program
         var deck = new Deck();
         var hand = new List<Card>();
         var softAces = 0;
+        int handValue = 0;
+
+        var dealer = new Dealer(deck);
 
         while (true)
         {
@@ -46,7 +49,7 @@ class Program
         }
     }
     
-    private static int GetHandValue(List<Card> hand, int softAces)
+    public static int GetHandValue(List<Card> hand, int softAces)
     {
         var total = hand.Sum(x => Math.Min((int)x.face, 10)) + (softAces == 1 ? 10 : 0);
         if (total > 21 && softAces > 0)
