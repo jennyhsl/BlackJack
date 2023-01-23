@@ -4,19 +4,13 @@ using System.Linq;
 
 namespace BlackJack;
 
-public class Dealer
+public class Dealer : PlayerBase
 {
     public List<Card> hand;
     public int handValue;
-    public int softAces;
-    public Deck deck;
 
-    public Dealer(Deck deck)
+    public Dealer(Deck deck) : base(deck)
     {
-        this.deck = deck;
-        hand = new List<Card>();
-        softAces = 0;
-        handValue = 0;
     }
 
     public void DrawCard()
