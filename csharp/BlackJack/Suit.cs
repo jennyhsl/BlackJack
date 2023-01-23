@@ -1,24 +1,6 @@
-﻿namespace BlackJack
-{
-    public enum Suit
-    {
-        Hearts, Diamonds, Spades, Clubs
-    }
+﻿namespace BlackJack;
 
-    public enum Face
-    {
-        Ace = 1,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Eight,
-        Nine,
-        Ten,
-        Jack,
-        Queen,
-        King
-    }
+public enum Suit
+{
+    Hearts, Diamonds, Spades, Clubs
 }
