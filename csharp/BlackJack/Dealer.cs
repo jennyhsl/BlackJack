@@ -21,33 +21,12 @@ class Dealer
 
     public void Play()
     {
-        // Draw initial two cards
-        _hand.Add(_deck.DrawCard());
-        _hand.Add(_deck.DrawCard());
-
-        // Check for soft aces
-        foreach (var card in _hand)
-        {
-            if (card.face == Face.A)
-            {
-                _softAces++;
-            }
-        }
-
-        _handValue = GetHandValue(_hand, _softAces);
-
         // Dealer hits until hand value is at least 17
         while (_handValue < 17)
         {
             var card = _deck.DrawCard();
             _hand.Add(card);
-
-            if (card.face == Face.A)
-            {
-                _softAces++;
-            }
-
-            _handValue = GetHandValue(_hand, _softAces);
+            Program.UpdateCardValues(card, ref _softAces, ref _handValue);
         }
 
         if (_handValue > 21)
@@ -57,7 +36,6 @@ class Dealer
         else
         {
             Console.WriteLine("Dealer's final hand value is {0}", _handValue);
-            // Compare final hand values with player's hand to determine winner
         }
     }
     

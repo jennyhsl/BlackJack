@@ -72,7 +72,7 @@ class Program
         }
     }
 
-    public static void DetermineWinner(int playerHandValue, Dealer dealer)
+    private static void DetermineWinner(int playerHandValue, Dealer dealer)
     {
         if (playerHandValue > 21)
         {
