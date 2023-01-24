@@ -10,11 +10,12 @@ class Program
     static void Main(string[] args)
     {
         var deck = new Deck();
-        var hand = new List<Card>();
-        var softAces = 0;
-        int handValue = 0;
+        var playerHand = new List<Card>();
+        var playerSoftAces = 0;
+        int playerHandValue = 0;
 
         var dealer = new Dealer(deck);
+        dealer.DrawInitialCards();
 
         while (true)
         {
@@ -23,40 +24,76 @@ class Program
             if (read == "Hit")
             {
                 var card = deck.DrawCard();
-                hand.Add(card);
-                if (card.face == Face.A)
+                playerHand.Add(card);
+                UpdateCardValues(card, ref playerSoftAces, ref playerHandValue);
+                Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.face, playerHandValue);
+                if (playerHandValue > 21)
                 {
-                    softAces++;
-                }
-
-                var total = GetHandValue(hand, softAces);
-                Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.face, total);
-                if (total > 21)
-                {
-                    Console.WriteLine("You got more than 21 points, you lost.");
+                    DetermineWinner(playerHandValue, dealer);
                     break;
                 }
-                if (total == 21)
+                if (playerHandValue == 21)
                 {
-                    Console.WriteLine("You got exactly 21 points, you win!");
+                    DetermineWinner(playerHandValue, dealer);
                     break;
                 }
             }
             else if (read == "Stand")
             {
+                dealer.Play();
+                DetermineWinner(playerHandValue, dealer);
                 break;
             }
         }
     }
-    
-    public static int GetHandValue(List<Card> hand, int softAces)
+
+    public static void UpdateCardValues(Card card, ref int softAces, ref int total)
     {
-        var total = hand.Sum(x => Math.Min((int)x.face, 10)) + (softAces == 1 ? 10 : 0);
-        if (total > 21 && softAces > 0)
-        {
-            total -= 10;
-            softAces--;
+        // Update card value count according to the BlackJack rules.
+        switch (card.face) {
+            case Face.A:
+                softAces++;
+                total += 11;
+                break;
+            case Face.J:
+            case Face.Q:
+            case Face.K:
+                total += 10;
+                break;
+            default:
+                total += (int)card.face;
+                break;
         }
-        return total;
+
+        // Check if the player busts 21 with an ace counting as 11. If so, downgrade the ace.
+        while ((total > 21) && (softAces > 0)) {
+            softAces--;
+            total -= 10;
+        }
     }
+
+    public static void DetermineWinner(int playerHandValue, Dealer dealer)
+    {
+        if (playerHandValue > 21)
+        {
+            Console.WriteLine("Player's hand is over 21, dealer wins.");
+        }
+        else if (dealer._handValue > 21)
+        {
+            Console.WriteLine("Dealer's hand is over 21, player wins.");
+        }
+        else if (playerHandValue > dealer._handValue)
+        {
+            Console.WriteLine("Player wins with a hand value of {0}", playerHandValue);
+        }
+        else if (playerHandValue < dealer._handValue)
+        {
+            Console.WriteLine("Dealer wins with a hand value of {0}", dealer._handValue);
+        }
+        else
+        {
+            Console.WriteLine("It's a draw!");
+        }
+    }
+
 }
