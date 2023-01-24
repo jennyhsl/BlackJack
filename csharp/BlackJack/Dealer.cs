@@ -25,6 +25,7 @@ public class Dealer : PlayerBase
         handValue = Program.GetHandValue(hand, softAces);
     }
     
+    
     public void Play(int playerHandValue)
     {
         while (handValue < 17)
