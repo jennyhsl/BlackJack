@@ -78,17 +78,17 @@ class Program
         {
             Console.WriteLine("Player's hand is over 21, dealer wins.");
         }
-        else if (dealer._handValue > 21)
+        else if (dealer.handValue > 21)
         {
             Console.WriteLine("Dealer's hand is over 21, player wins.");
         }
-        else if (playerHandValue > dealer._handValue)
+        else if (playerHandValue > dealer.handValue)
         {
             Console.WriteLine("Player wins with a hand value of {0}", playerHandValue);
         }
-        else if (playerHandValue < dealer._handValue)
+        else if (playerHandValue < dealer.handValue)
         {
-            Console.WriteLine("Dealer wins with a hand value of {0}", dealer._handValue);
+            Console.WriteLine("Dealer wins with a hand value of {0}", dealer.handValue);
         }
         else
         {

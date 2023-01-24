@@ -8,12 +8,12 @@ public class Deck
 {
     public Queue<Card> Cards;
 
-    private readonly Random _random;
+    private readonly Random random;
     
     public Deck()
     {
         Cards = new Queue<Card>();
-        _random = new();
+        random = new();
         
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
@@ -26,7 +26,7 @@ public class Deck
 
     public Card DrawCard()
     {
-        int randomCard = _random.Next(Cards.Count);
+        int randomCard = random.Next(Cards.Count);
         return Cards.ElementAt(randomCard);
     }
 }
